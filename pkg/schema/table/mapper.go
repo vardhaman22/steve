@@ -42,7 +42,7 @@ func (t *ColumnMapper) FromInternal(d data.Object) {
 	}
 }
 
-func (t *ColumnMapper) ModifySchema(schema *types.Schema, schemas *types.Schemas) error {
+func (t *ColumnMapper) ModifySchema(schema *types.Schema, _ *types.Schemas) error {
 	as := &types2.APISchema{
 		Schema: schema,
 	}

@@ -9,7 +9,7 @@ var (
 type errorResponder struct {
 }
 
-func (e *errorResponder) Error(w http.ResponseWriter, req *http.Request, err error) {
+func (e *errorResponder) Error(w http.ResponseWriter, _ *http.Request, err error) {
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write([]byte(err.Error()))
 }

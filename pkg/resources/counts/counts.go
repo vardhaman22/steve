@@ -97,12 +97,12 @@ func toAPIObject(c Count) types.APIObject {
 	}
 }
 
-func (s *Store) ByID(apiOp *types.APIRequest, schema *types.APISchema, id string) (types.APIObject, error) {
+func (s *Store) ByID(apiOp *types.APIRequest, _ *types.APISchema, _ string) (types.APIObject, error) {
 	c := s.getCount(apiOp)
 	return toAPIObject(c), nil
 }
 
-func (s *Store) List(apiOp *types.APIRequest, schema *types.APISchema) (types.APIObjectList, error) {
+func (s *Store) List(apiOp *types.APIRequest, _ *types.APISchema) (types.APIObjectList, error) {
 	c := s.getCount(apiOp)
 	return types.APIObjectList{
 		Objects: []types.APIObject{
@@ -112,7 +112,7 @@ func (s *Store) List(apiOp *types.APIRequest, schema *types.APISchema) (types.AP
 }
 
 // Watch creates a watch for the Counts schema. This returns only the counts which have changed since the watch was established
-func (s *Store) Watch(apiOp *types.APIRequest, schema *types.APISchema, w types.WatchRequest) (chan types.APIEvent, error) {
+func (s *Store) Watch(apiOp *types.APIRequest, _ *types.APISchema, _ types.WatchRequest) (chan types.APIEvent, error) {
 	var (
 		result      = make(chan Count, 100)
 		counts      map[string]ItemCount

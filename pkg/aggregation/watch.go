@@ -34,7 +34,7 @@ type handler struct {
 	cancel func()
 }
 
-func (h *handler) OnSecret(key string, secret *corev1.Secret) (*corev1.Secret, error) {
+func (h *handler) OnSecret(_ string, secret *corev1.Secret) (*corev1.Secret, error) {
 	if secret == nil {
 		return nil, nil
 	}

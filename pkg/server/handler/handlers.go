@@ -7,7 +7,7 @@ import (
 	"github.com/rancher/steve/pkg/schema"
 )
 
-func k8sAPI(sf schema.Factory, apiOp *types.APIRequest) {
+func k8sAPI(_ schema.Factory, apiOp *types.APIRequest) {
 	vars := mux.Vars(apiOp.Request)
 	apiOp.Name = vars["name"]
 	apiOp.Type = vars["type"]
@@ -27,6 +27,6 @@ func k8sAPI(sf schema.Factory, apiOp *types.APIRequest) {
 	}
 }
 
-func apiRoot(sf schema.Factory, apiOp *types.APIRequest) {
+func apiRoot(_ schema.Factory, apiOp *types.APIRequest) {
 	apiOp.Type = "apiRoot"
 }

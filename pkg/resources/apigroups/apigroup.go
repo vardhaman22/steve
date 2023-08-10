@@ -54,7 +54,7 @@ func toAPIObject(schema *types.APISchema, group v1.APIGroup) types.APIObject {
 
 }
 
-func (e *Store) List(apiOp *types.APIRequest, schema *types.APISchema) (types.APIObjectList, error) {
+func (e *Store) List(_ *types.APIRequest, schema *types.APISchema) (types.APIObjectList, error) {
 	groupList, err := e.discovery.ServerGroups()
 	if err != nil {
 		return types.APIObjectList{}, err

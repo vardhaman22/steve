@@ -242,7 +242,7 @@ func (s *Store) List(apiOp *types.APIRequest, schema *types.APISchema) (*unstruc
 	return result, buffer, err
 }
 
-func (s *Store) list(apiOp *types.APIRequest, schema *types.APISchema, client dynamic.ResourceInterface) (*unstructured.UnstructuredList, error) {
+func (s *Store) list(apiOp *types.APIRequest, _ *types.APISchema, client dynamic.ResourceInterface) (*unstructured.UnstructuredList, error) {
 	opts := metav1.ListOptions{}
 	if err := decodeParams(apiOp, &opts); err != nil {
 		return nil, nil

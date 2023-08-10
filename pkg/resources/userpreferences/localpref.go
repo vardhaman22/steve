@@ -63,7 +63,7 @@ func getUserName(apiOp *types.APIRequest) string {
 	return user.GetName()
 }
 
-func (l *localStore) ByID(apiOp *types.APIRequest, schema *types.APISchema, id string) (types.APIObject, error) {
+func (l *localStore) ByID(apiOp *types.APIRequest, _ *types.APISchema, _ string) (types.APIObject, error) {
 	data, err := get()
 	if err != nil {
 		return types.APIObject{}, err
@@ -90,7 +90,7 @@ func (l *localStore) List(apiOp *types.APIRequest, schema *types.APISchema) (typ
 	}, nil
 }
 
-func (l *localStore) Update(apiOp *types.APIRequest, schema *types.APISchema, data types.APIObject, id string) (types.APIObject, error) {
+func (l *localStore) Update(apiOp *types.APIRequest, schema *types.APISchema, data types.APIObject, _ string) (types.APIObject, error) {
 	err := set(data.Data())
 	if err != nil {
 		return types.APIObject{}, err
@@ -98,7 +98,7 @@ func (l *localStore) Update(apiOp *types.APIRequest, schema *types.APISchema, da
 	return l.ByID(apiOp, schema, "")
 }
 
-func (l *localStore) Delete(apiOp *types.APIRequest, schema *types.APISchema, id string) (types.APIObject, error) {
+func (l *localStore) Delete(apiOp *types.APIRequest, schema *types.APISchema, _ string) (types.APIObject, error) {
 	return l.Update(apiOp, schema, types.APIObject{
 		Object: map[string]interface{}{},
 	}, "")

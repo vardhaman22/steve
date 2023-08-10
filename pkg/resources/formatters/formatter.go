@@ -5,7 +5,7 @@ import (
 	"github.com/rancher/norman/types/convert"
 )
 
-func DropHelmData(request *types.APIRequest, resource *types.RawResource) {
+func DropHelmData(_ *types.APIRequest, resource *types.RawResource) {
 	data := resource.APIObject.Data()
 	if data.String("metadata", "labels", "owner") == "helm" ||
 		data.String("metadata", "labels", "OWNER") == "TILLER" {
@@ -15,7 +15,7 @@ func DropHelmData(request *types.APIRequest, resource *types.RawResource) {
 	}
 }
 
-func Pod(request *types.APIRequest, resource *types.RawResource) {
+func Pod(_ *types.APIRequest, resource *types.RawResource) {
 	data := resource.APIObject.Data()
 	fields := data.StringSlice("metadata", "fields")
 	if len(fields) > 2 {

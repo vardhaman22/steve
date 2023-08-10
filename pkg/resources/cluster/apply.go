@@ -25,7 +25,7 @@ type Apply struct {
 	schemaFactory steveschema.Factory
 }
 
-func (a *Apply) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
+func (a *Apply) ServeHTTP(_ http.ResponseWriter, req *http.Request) {
 	var (
 		apiContext = types.GetAPIContext(req.Context())
 		input      ApplyInput

@@ -71,12 +71,12 @@ func Register(ctx context.Context,
 	crd.OnChange(ctx, "schema", h.OnChangeCRD)
 }
 
-func (h *handler) OnChangeCRD(key string, crd *apiextv1.CustomResourceDefinition) (*apiextv1.CustomResourceDefinition, error) {
+func (h *handler) OnChangeCRD(_ string, crd *apiextv1.CustomResourceDefinition) (*apiextv1.CustomResourceDefinition, error) {
 	h.queueRefresh()
 	return crd, nil
 }
 
-func (h *handler) OnChangeAPIService(key string, api *apiv1.APIService) (*apiv1.APIService, error) {
+func (h *handler) OnChangeAPIService(_ string, api *apiv1.APIService) (*apiv1.APIService, error) {
 	h.queueRefresh()
 	return api, nil
 }

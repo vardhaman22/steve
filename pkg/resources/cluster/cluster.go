@@ -173,7 +173,7 @@ func (s *Store) List(apiOp *types.APIRequest, schema *types.APISchema) (types.AP
 	}, nil
 }
 
-func (s *Store) Watch(apiOp *types.APIRequest, schema *types.APISchema, w types.WatchRequest) (chan types.APIEvent, error) {
+func (s *Store) Watch(apiOp *types.APIRequest, _ *types.APISchema, _ types.WatchRequest) (chan types.APIEvent, error) {
 	result := make(chan types.APIEvent, 1)
 	result <- types.APIEvent{
 		Name:         "local",

@@ -277,11 +277,11 @@ func (s *SummaryCache) process(obj runtime.Object) (*summary.SummarizedObject, [
 		if schema == nil {
 			continue
 		}
-		copy := rel
-		if copy.Namespace == "" && attributes.Namespaced(schema) {
-			copy.Namespace = summary.Namespace
+		relCopy := rel
+		if relCopy.Namespace == "" && attributes.Namespaced(schema) {
+			relCopy.Namespace = summary.Namespace
 		}
-		rels = append(rels, &copy)
+		rels = append(rels, &relCopy)
 	}
 
 	return summary, rels
@@ -324,17 +324,17 @@ func (s *SummaryCache) refersTo(summarized *summary.SummarizedObject, rel *summa
 	return summarized.Namespace == ns
 }
 
-func (s *SummaryCache) OnAdd(_ runtimeschema.GroupVersionKind, key string, obj runtime.Object) error {
+func (s *SummaryCache) OnAdd(_ runtimeschema.GroupVersionKind, _ string, obj runtime.Object) error {
 	s.Add(obj)
 	return nil
 }
 
-func (s *SummaryCache) OnRemove(_ runtimeschema.GroupVersionKind, key string, obj runtime.Object) error {
+func (s *SummaryCache) OnRemove(_ runtimeschema.GroupVersionKind, _ string, obj runtime.Object) error {
 	s.Remove(obj)
 	return nil
 }
 
-func (s *SummaryCache) OnChange(_ runtimeschema.GroupVersionKind, key string, obj, oldObj runtime.Object) error {
+func (s *SummaryCache) OnChange(_ runtimeschema.GroupVersionKind, _ string, obj, oldObj runtime.Object) error {
 	s.Change(obj, oldObj)
 	return nil
 }

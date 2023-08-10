@@ -174,7 +174,7 @@ func ToMiddleware(auth Authenticator) Middleware {
 	}
 }
 
-func AlwaysAdmin(req *http.Request) (user.Info, bool, error) {
+func AlwaysAdmin(_ *http.Request) (user.Info, bool, error) {
 	return &user.DefaultInfo{
 		Name: "admin",
 		UID:  "admin",

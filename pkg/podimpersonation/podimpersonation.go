@@ -305,7 +305,8 @@ func (s *PodImpersonation) waitForServiceAccount(ctx context.Context, client kub
 	}
 	defer func() {
 		go func() {
-			for range w.ResultChan() {
+			for len(w.ResultChan()) > 0 {
+				<-w.ResultChan()
 			}
 		}()
 		w.Stop()
@@ -410,7 +411,8 @@ func (s *PodImpersonation) createPod(ctx context.Context, user user.Info, role *
 	}
 	defer func() {
 		go func() {
-			for range resp.ResultChan() {
+			for len(resp.ResultChan()) > 0 {
+				<-resp.ResultChan()
 			}
 		}()
 		resp.Stop()
@@ -510,7 +512,7 @@ func (s *PodImpersonation) adminKubeConfig(user user.Info, role *rbacv1.ClusterR
 	}, nil
 }
 
-func (s *PodImpersonation) augmentPod(pod *v1.Pod, sa *v1.ServiceAccount, secret *v1.Secret, imageOverride string) *v1.Pod {
+func (s *PodImpersonation) augmentPod(pod *v1.Pod, _ *v1.ServiceAccount, secret *v1.Secret, imageOverride string) *v1.Pod {
 	var (
 		zero = int64(0)
 		t    = true

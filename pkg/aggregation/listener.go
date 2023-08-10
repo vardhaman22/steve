@@ -49,7 +49,7 @@ func (l *Listener) Close() error {
 	return nil
 }
 
-func (l *Listener) Dial(ctx context.Context, network, address string) (net.Conn, error) {
+func (l *Listener) Dial(ctx context.Context, _, _ string) (net.Conn, error) {
 	left, right := net.Pipe()
 	l.RLock()
 	defer l.RUnlock()

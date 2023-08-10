@@ -368,7 +368,7 @@ func moveToUnderscore(obj *unstructured.Unstructured) *unstructured.Unstructured
 	return obj
 }
 
-func toAPIEvent(apiOp *types.APIRequest, schema *types.APISchema, event watch.Event) types.APIEvent {
+func toAPIEvent(_ *types.APIRequest, schema *types.APISchema, event watch.Event) types.APIEvent {
 	name := types.ChangeAPIEvent
 	switch event.Type {
 	case watch.Deleted:

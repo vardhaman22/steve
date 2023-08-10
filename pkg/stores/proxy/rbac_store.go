@@ -40,7 +40,7 @@ type rbacPartitioner struct {
 
 // Lookup returns the default passthrough partition which is used only for retrieving single resources.
 // Listing or watching resources require custom partitions.
-func (p *rbacPartitioner) Lookup(apiOp *types.APIRequest, schema *types.APISchema, verb, id string) (partition.Partition, error) {
+func (p *rbacPartitioner) Lookup(_ *types.APIRequest, _ *types.APISchema, verb, _ string) (partition.Partition, error) {
 	switch verb {
 	case "create":
 		fallthrough
@@ -88,7 +88,7 @@ func (p *rbacPartitioner) All(apiOp *types.APIRequest, schema *types.APISchema, 
 }
 
 // Store returns an UnstructuredStore suited to listing and watching resources by partition.
-func (p *rbacPartitioner) Store(apiOp *types.APIRequest, partition partition.Partition) (partition.UnstructuredStore, error) {
+func (p *rbacPartitioner) Store(_ *types.APIRequest, partition partition.Partition) (partition.UnstructuredStore, error) {
 	return &byNameOrNamespaceStore{
 		Store:     p.proxyStore,
 		partition: partition.(Partition),
