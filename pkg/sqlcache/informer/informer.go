@@ -71,7 +71,7 @@ func NewInformer(ctx context.Context, client dynamic.ResourceInterface, fields [
 			return newSyntheticWatcher(ctx, cancel).watch(client, options, defaultRefreshTime)
 		}
 	}
-	listWatcher := &cache.ListWatch{
+	listWatcher := cache.ToListWatcherWithWatchListSemantics(&cache.ListWatch{
 		ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
 			a, err := client.List(ctx, options)
 			if err != nil {
@@ -93,7 +93,7 @@ func NewInformer(ctx context.Context, client dynamic.ResourceInterface, fields [
 			return a, err
 		},
 		WatchFunc: watchFunc,
-	}
+	}, client)
 
 	example := &unstructured.Unstructured{}
 	example.SetGroupVersionKind(gvk)
