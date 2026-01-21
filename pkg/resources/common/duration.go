@@ -2,6 +2,7 @@ package common
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -14,6 +15,20 @@ func ParseTimestampOrHumanReadableDuration(s string) (time.Duration, error) {
 	parsedTime, err := time.Parse(time.RFC3339, s)
 	if err == nil {
 		return time.Since(parsedTime), nil
+	}
+
+	// 2. Try Unix Timestamp (e.g., "1768904437749")
+	// We check if the string is purely numeric
+	if unixVal, err := strconv.ParseInt(s, 10, 64); err == nil {
+		var t time.Time
+		// Heuristic: If number is large, it's likely Milliseconds (13 digits)
+		// 1768904437749 is approx Jan 2026 in ms.
+		if unixVal > 9999999999 {
+			t = time.UnixMilli(unixVal)
+		} else {
+			t = time.Unix(unixVal, 0)
+		}
+		return time.Since(t), nil
 	}
 
 	return ParseHumanReadableDuration(s)
