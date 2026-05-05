@@ -5,6 +5,14 @@ go 1.26.0
 toolchain go1.26.2
 
 replace (
+	github.com/rancher/apiserver => github.com/vardhaman22/apiserver v0.0.0-20260505113228-821112dd40dc
+	github.com/rancher/dynamiclistener => github.com/vardhaman22/dynamiclistener v0.0.0-20260505112651-c2cb9c169bc6
+	github.com/rancher/lasso => github.com/vardhaman22/lasso v0.0.0-20260505105142-a58cfbb7f92a
+	github.com/rancher/norman => github.com/vardhaman22/norman v0.0.0-20260505112204-06591604dd4e
+	github.com/rancher/wrangler/v3 => github.com/vardhaman22/wrangler/v3 v3.0.0-20260505111034-37cdd9e68bac
+)
+
+replace (
 	github.com/crewjam/saml => github.com/rancher/saml v0.4.14
 	github.com/knative/pkg => github.com/rancher/pkg v0.0.0-20181214184433-b04c0947ad2f
 	github.com/matryer/moq => github.com/rancher/moq v0.0.0-20190404221404-ee5226d43009
@@ -31,10 +39,10 @@ require (
 	github.com/rancher/apiserver v0.9.1
 	github.com/rancher/dynamiclistener v0.7.4-rc.2
 	github.com/rancher/kubernetes-provider-detector v0.1.6-0.20240606163014-fcae75779379
-	github.com/rancher/lasso v0.2.7
+	github.com/rancher/lasso v0.2.8
 	github.com/rancher/norman v0.9.0
 	github.com/rancher/remotedialer v0.6.1-rc.1
-	github.com/rancher/wrangler/v3 v3.5.0-rc.2
+	github.com/rancher/wrangler/v3 v3.5.1
 	github.com/sirupsen/logrus v1.9.4
 	github.com/stretchr/testify v1.11.1
 	github.com/tinylib/msgp v1.6.4
@@ -138,16 +146,16 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.1 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
-	golang.org/x/crypto v0.48.0 // indirect
+	golang.org/x/crypto v0.50.0 // indirect
 	golang.org/x/exp v0.0.0-20251219203646-944ab1f22d93 // indirect
-	golang.org/x/mod v0.33.0 // indirect
-	golang.org/x/net v0.50.0 // indirect
+	golang.org/x/mod v0.35.0 // indirect
+	golang.org/x/net v0.53.0 // indirect
 	golang.org/x/oauth2 v0.34.0 // indirect
-	golang.org/x/sys v0.42.0 // indirect
-	golang.org/x/term v0.40.0 // indirect
-	golang.org/x/text v0.34.0 // indirect
+	golang.org/x/sys v0.43.0 // indirect
+	golang.org/x/term v0.42.0 // indirect
+	golang.org/x/text v0.36.0 // indirect
 	golang.org/x/time v0.14.0 // indirect
-	golang.org/x/tools v0.42.0 // indirect
+	golang.org/x/tools v0.44.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.4.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260128011058-8636f8732409 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260128011058-8636f8732409 // indirect
