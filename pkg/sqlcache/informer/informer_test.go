@@ -417,3 +417,7 @@ func (m *mockInformer) AddEventHandlerWithOptions(handler cache.ResourceEventHan
 	return nil, nil
 
 }
+
+func (m *mockInformer) HasSyncedChecker() cache.DoneChecker {
+	return nil
+}

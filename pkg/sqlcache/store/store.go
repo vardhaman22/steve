@@ -528,6 +528,14 @@ func (s *Store) GetType() reflect.Type {
 	return s.typ
 }
 
+func (s *Store) Bookmark(rv string) {
+
+}
+
+func (s *Store) LastStoreSyncResourceVersion() string {
+	return ""
+}
+
 // RegisterAfterAdd registers a func to be called after each add event
 func (s *Store) RegisterAfterAdd(f func(key string, obj any, txC db.TxClient) error) {
 	s.afterAdd = append(s.afterAdd, f)
