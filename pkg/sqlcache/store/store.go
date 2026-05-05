@@ -8,11 +8,13 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"sync"
 
 	"github.com/rancher/lasso/pkg/log"
 	"github.com/rancher/steve/pkg/sqlcache/db"
 	"github.com/rancher/steve/pkg/sqlcache/sqltypes"
 	"github.com/sirupsen/logrus"
+	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/tools/cache"
 
@@ -68,6 +70,9 @@ type Store struct {
 	afterDelete    []func(key string, obj any, tx db.TxClient) error
 	afterDeleteAll []func(tx db.TxClient) error
 	beforeDropAll  []func(tx db.TxClient) error
+
+	lastSyncResourceVersionMutex sync.RWMutex
+	lastSyncResourceVersion      string
 }
 
 // Test that Store implements cache.Indexer
@@ -375,6 +380,7 @@ func (s *Store) Add(obj any) error {
 		return err
 	}
 	s.checkUpdateExternalInfo(key)
+	s.updateResourceVersion(obj)
 	return nil
 }
 
@@ -400,6 +406,7 @@ func (s *Store) Update(obj any) error {
 		return err
 	}
 	s.checkUpdateExternalInfo(key)
+	s.updateResourceVersion(obj)
 	return nil
 }
 
@@ -414,6 +421,7 @@ func (s *Store) Delete(obj any) error {
 		log.Errorf("Error in Store.Delete for type %v: %v", s.name, err)
 		return err
 	}
+	s.updateResourceVersion(obj)
 	return nil
 }
 
@@ -459,7 +467,7 @@ func (s *Store) Get(obj any) (item any, exists bool, err error) {
 }
 
 // Replace will delete the contents of the Store, using instead the given list
-func (s *Store) Replace(objects []any, _ string) error {
+func (s *Store) Replace(objects []any, resourceVersion string) error {
 	objectMap := map[string]any{}
 
 	for _, object := range objects {
@@ -474,6 +482,7 @@ func (s *Store) Replace(objects []any, _ string) error {
 		log.Errorf("Error in Store.Replace for type %v: %v", s.name, err)
 		return err
 	}
+	s.Bookmark(resourceVersion)
 	return nil
 }
 
@@ -529,11 +538,26 @@ func (s *Store) GetType() reflect.Type {
 }
 
 func (s *Store) Bookmark(rv string) {
-
+	s.lastSyncResourceVersionMutex.Lock()
+	defer s.lastSyncResourceVersionMutex.Unlock()
+	s.lastSyncResourceVersion = rv
 }
 
 func (s *Store) LastStoreSyncResourceVersion() string {
-	return ""
+	s.lastSyncResourceVersionMutex.RLock()
+	defer s.lastSyncResourceVersionMutex.RUnlock()
+	return s.lastSyncResourceVersion
+}
+
+func (s *Store) updateResourceVersion(obj any) {
+	if d, ok := obj.(cache.DeletedFinalStateUnknown); ok {
+		obj = d.Obj
+	}
+	if acc, err := meta.Accessor(obj); err == nil {
+		if rv := acc.GetResourceVersion(); rv != "" {
+			s.Bookmark(rv)
+		}
+	}
 }
 
 // RegisterAfterAdd registers a func to be called after each add event
